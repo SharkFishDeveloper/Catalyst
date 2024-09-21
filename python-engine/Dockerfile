@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 
 # Copy the script to run code and set executable permission
 COPY ./scripts/run_code.sh /usr/src/app/scripts/run_code.sh
-COPY ./app ./app
+# COPY ./app/main.py ./app/
 # Ensure the script has executable permissions
 RUN chmod +x /usr/src/app/scripts/run_code.sh
 

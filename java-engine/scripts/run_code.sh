@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to the Java file to compile
-CODE_FILE="./app/Main.java"
+CODE_FILE="/usr/src/app/Main.java"
 
 # Compile the Java code and store the result
 javac $CODE_FILE 2> compile_error.txt
@@ -14,7 +14,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Run the compiled Java program and capture runtime errors
-java -cp ./app Main > output.txt 2> runtime_error.txt
+java -cp /usr/src/app Main > output.txt 2> runtime_error.txt
 
 # Check if there were any runtime errors
 if [ $? -ne 0 ]; then

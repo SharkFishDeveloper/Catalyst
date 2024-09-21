@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to the C++ file to compile
-CODE_FILE="./app/main.cpp"
+CODE_FILE="/usr/src/app/main.cpp"
 
 # Compile the C++ code and store the result
 g++ -o output_program $CODE_FILE 2> compile_error.txt
