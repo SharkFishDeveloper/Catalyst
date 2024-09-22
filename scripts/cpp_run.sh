@@ -34,5 +34,4 @@ if [ $? -ne 0 ]; then
 fi
 
 # Display the output if the program ran successfully
-echo "Program output:"
 cat output.txt
