@@ -1,22 +1,15 @@
 FROM debian:latest
-# FROM ubuntu:latest
-# Set working directory
+
 WORKDIR /usr/src/app
 
 # Install necessary dependencies including the latest JDK
 RUN apt-get update && apt-get install -y \
     clang make \
     openjdk-17-jdk \
-    nodejs \
+    nodejs npm\
     python3 \
     && apt-get clean
 
-    # Copy the engines into the container
-# COPY ./script/java.sh ./script/java.sh
-# COPY ./script/python.sh ./script/python.sh
-# COPY ./script/js.sh ./script/js.sh
-# COPY ./script/cpp.sh ./script/cpp.sh
-# COPY ./script/a.sh ./script/a.sh
 
 COPY ./py.sh ./py.sh
 COPY ./cp.sh ./cp.sh
@@ -29,6 +22,13 @@ COPY ./python-engine /usr/src/app/python-engine
 COPY ./js-engine /usr/src/app/js-engine
 
 RUN chmod +x /usr/src/app/*.sh
+
+COPY ./server/package.json ./server/package.json
+COPY ./server/package-lock.json ./server/package-lock.json
+RUN cd server && npm install
+
+CMD ["node", "./server/index.js"]
+
 # -------------------------------------
 
 # c
@@ -57,7 +57,7 @@ RUN chmod +x /usr/src/app/*.sh
 # --------------------------------
 
 # java
-# docker run --rm -v $(pwd)/java-engine/app/main.java:/usr/src/app/java-engine/app/main.java --ulimit cpu=5 full1 ./jv.sh inputtrue
+# docker run --rm -v $(pwd)/java-engine/app/Main.java:/usr/src/app/java-engine/app/Main.java --ulimit cpu=5 full1 ./jv.sh
 
 
 # docker run --rm -v $(pwd)/java-engine/app/Main.java:/usr/src/app/java-engine/app/Main.java  -v $(pwd)/java-engine/app/input.txt:/usr/src/app/java-engine/app/input.txt    --ulimit cpu=5 full1 ./jv.sh inputtrue

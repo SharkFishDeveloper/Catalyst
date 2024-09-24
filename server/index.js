@@ -9,14 +9,67 @@ app.use(express.json());
 
 
 app.post("/submit-code",async(req,res)=>{
-    const {code,language} = req.body;
-    if(language === "cpp" || language === "c"){
-        const __dirname = process.cwd();
-        fs.writeFileSync(`../cpp-engine/app/main.${language}`,code);
-        const filePath = path.resolve(__dirname, `../cpp-engine/app/main.${language}`);
-        // docker run --rm -v ${filePath}:/usr/src/app/cpp-engine/app/main.cpp --ulimit cpu=5 full ./scripts/cpp_run.sh cpp
-        const dockerCommand = `docker run -v ${filePath}:/usr/src/app/cpp-engine/app/main.cpp  full ./scripts/cpp_run.sh cpp `;
-        await exec(dockerCommand, (error, stdout, stderr) => {
+    const {code,language,stdin} = req.body;
+
+    let shellextension = "";
+    let engine = "";
+    let fileExtension = "";
+    let stdinBool = stdin ? true : false;
+  
+
+    switch (language){
+        case "cpp":
+        shellextension = "cp.sh cpp"
+        engine = `cpp-engine`
+        fileExtension = "cpp"
+        break;
+
+        case "c":
+        shellextension = "cp.sh c"
+        engine = `cpp-engine`
+        fileExtension = "c"
+        break;
+
+        case "python":
+        shellextension = stdinBool ?  "py.sh inputtrue" : "py.sh"
+        engine = `python-engine`
+        fileExtension = "py"
+        break;
+
+        case "java":
+        shellextension =stdinBool ? "jv.sh inputtrue" : "jv.sh"
+        engine = `java-engine`
+        fileExtension = "java"
+        break;
+
+        case "js":
+        shellextension = stdinBool ? "j.sh inputtrue" : "j.sh"
+        engine = `js-engine`
+        fileExtension = "js"
+        break;
+    }
+
+    let codeFile = language==="java" ? `Main.${fileExtension}` : language === "js"?`index.${fileExtension}`:`main.${fileExtension}`;
+
+    const __dirname = process.cwd();
+    const filePath = path.resolve(__dirname, `../${engine}/app/${codeFile}`);
+    console.log("FILEPATH",filePath)
+    fs.writeFileSync(filePath,code);
+    
+    let command = `docker run --rm -v ${filePath}:/usr/src/app/${engine}/app/${codeFile} `;
+
+    if (stdinBool) {
+        const inputfilePath = path.resolve(__dirname, `../${engine}/app/input.txt`);
+        command += ` -v ${inputfilePath}:/usr/src/app/${engine}/app/input.txt --ulimit cpu=5 full1 ./${shellextension}`;
+        fs.writeFileSync(`../${engine}/app/input.txt`,stdin);
+    }
+    else if(stdinBool!==""){
+        command += ` --ulimit cpu=5 full1 ./${shellextension}`;
+    }
+
+    // console.log(`Executing command: ${command},`,stdin);
+
+        await exec(command, (error, stdout, stderr) => {
             if (error) {
               console.error(`Error: ${stderr}`);
               return res.send(stderr)
@@ -24,10 +77,11 @@ app.post("/submit-code",async(req,res)=>{
             console.log(`Output: ${stdout}`);
             return res.send(stdout)
           });
-    }
+    
 })
 
-app.post("/bulk",async(req,res)=>{
+app.get("/languages",async(req,res)=>{
+    res.send({languages:"By defualt 5 languages run : C,C++,Java,Python,Javascript"})
 })
 
 app.listen(2000);
