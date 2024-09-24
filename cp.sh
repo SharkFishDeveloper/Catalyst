@@ -33,5 +33,16 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# start
+if [ -f "/usr/src/app/cpp-engine/app/input.txt" ]; then
+    # Run the compiled program with input redirection
+    ./output_program < /usr/src/app/cpp-engine/app/input.txt > output.txt 2> runtime_error.txt
+else
+    # Run the compiled program without input redirection
+    ./output_program > output.txt 2> runtime_error.txt
+fi
+# end
+
+
 # Display the output if the program ran successfully
 cat output.txt

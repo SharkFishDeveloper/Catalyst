@@ -14,8 +14,8 @@ app.post("/submit-code",async(req,res)=>{
         const __dirname = process.cwd();
         fs.writeFileSync(`../cpp-engine/app/main.${language}`,code);
         const filePath = path.resolve(__dirname, `../cpp-engine/app/main.${language}`);
-
-        const dockerCommand = `docker run --rm -v ${filePath}:/usr/src/app/cpp-engine/app/main.cpp --ulimit cpu=5 full ./scripts/cpp_run.sh cpp `;
+        // docker run --rm -v ${filePath}:/usr/src/app/cpp-engine/app/main.cpp --ulimit cpu=5 full ./scripts/cpp_run.sh cpp
+        const dockerCommand = `docker run -v ${filePath}:/usr/src/app/cpp-engine/app/main.cpp  full ./scripts/cpp_run.sh cpp `;
         await exec(dockerCommand, (error, stdout, stderr) => {
             if (error) {
               console.error(`Error: ${stderr}`);
