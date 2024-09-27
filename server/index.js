@@ -19,7 +19,7 @@ const globalLimiter = rateLimit({
 
 const app = express();
 app.use(express.json());
-
+app.use(cors());
 app.use(globalLimiter);   
 app.use('/submit-code', limiter);
 
