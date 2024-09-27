@@ -4,6 +4,7 @@ import fs from "fs";
 import path from "path";
 import { exec } from "child_process";
 import rateLimit from 'express-rate-limit';
+import cors from "cors";
 
 const limiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
