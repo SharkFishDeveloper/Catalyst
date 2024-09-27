@@ -7,13 +7,22 @@ import rateLimit from 'express-rate-limit';
 
 const limiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
-    max: 10, // Limit each IP to 5 requests per windowMs
+    max: 10, // Limit each IP to 10 requests per windowMs
     message: "Too many requests, please try again later."
+});
+
+const globalLimiter = rateLimit({
+    windowMs: 60  * 1000, // 1 minute
+    max: 120, // Limit the total requests to 100 per windowMs
+    message: "Server is receiving too many requests, please try again later."
 });
 
 const app = express();
 app.use(express.json());
+
+app.use(globalLimiter);   
 app.use('/submit-code', limiter);
+
 
 
 app.post("/submit-code",async(req,res)=>{
@@ -74,17 +83,17 @@ app.post("/submit-code",async(req,res)=>{
     else if(stdinBool!==""){
         command += ` --ulimit cpu=5 catalyst ./${shellextension}`;
     }
-    // console.log(command)
+
         const startTime = Date.now();
         await exec(command, (error, stdout, stderr) => {
             const endTime = Date.now(); // Record end time
             const executionTime = endTime - startTime; 
             if (error) {
-              console.error(`Error: ${stdout, stderr}`);
+              console.error(`Error: ${stdout}`);
               return res.json({stdout:"",executionTime,stderr:stdout})
             }
             console.log(`Output: ${stdout}`);
-            return res.json({stdout,executionTime,stderr})
+            return res.json({stdout,executionTime,stderr,language})
         });
 })
 
@@ -96,4 +105,6 @@ app.get("/",async(req,res)=>{
     res.send({message:"You are using Catalyst code engine created by S.F.D"})
 })
 
-app.listen(2000,()=>console.log("Start"));
+
+//* Change port if you want !!
+app.listen(2000,()=>console.log("Started on PORT : 2000"));
