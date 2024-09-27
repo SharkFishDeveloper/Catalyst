@@ -10,7 +10,6 @@ if [[ "$1" == "inputtrue" ]]; then
   shift  # Remove the flag from the argument list
 fi
 
-
 CODE_FILE="/usr/src/app/java-engine/app/Main.java"
 
 # Compile the Java code and store the result
@@ -44,5 +43,4 @@ if [ $? -ne 0 ]; then
 fi
 
 # Display the output if the program ran successfully
-echo "Program output:"
 cat output.txt

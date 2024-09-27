@@ -18,21 +18,20 @@ elif [ "$FILE_EXTENSION" == "cpp" ]; then
 fi
 # Check if there were any compilation errors
 if [ $? -ne 0 ]; then
-    echo "Compilation failed!"
+    echo -e "Compilation failed!\n"
     cat compile_error.txt
     exit 1
 fi
-
 # Run the compiled program and capture runtime errors
 ./output_program > output.txt 2> runtime_error.txt
 
 # Check if there were any runtime errors
 if [ $? -ne 0 ]; then
-    echo "Runtime error!"
+    echo -e "Runtime error!\n"
     cat runtime_error.txt
     exit 1
-fi
 
+fi
 # start
 if [ -f "/usr/src/app/cpp-engine/app/input.txt" ]; then
     # Run the compiled program with input redirection
@@ -42,7 +41,9 @@ else
     ./output_program > output.txt 2> runtime_error.txt
 fi
 # end
+if [ $? -ne 0 ]; then
+    cat runtime_error.txt
+    exit 1
+fi
 
-
-# Display the output if the program ran successfully
 cat output.txt

@@ -34,40 +34,42 @@ CMD ["node", "./server/index.js"]
 # c
 # no inputtrue in this
 
-# docker run --rm -v $(pwd)/cpp-engine/app/main.c:/usr/src/app/cpp-engine/app/main.c --ulimit cpu=5 full1 ./cp.sh c
+# docker run --rm -v $(pwd)/cpp-engine/app/main.c:/usr/src/app/cpp-engine/app/main.c --ulimit cpu=5 catalyst ./cp.sh c
 
-# docker run --rm -v $(pwd)/cpp-engine/app/main.c:/usr/src/app/cpp-engine/app/main.c -v $(pwd)/cpp-engine/app/input.txt:/usr/src/app/cpp-engine/app/input.txt --ulimit cpu=5 full1 ./cp.sh cpp 
+# docker run --rm -v $(pwd)/cpp-engine/app/main.c:/usr/src/app/cpp-engine/app/main.c -v $(pwd)/cpp-engine/app/input.txt:/usr/src/app/cpp-engine/app/input.txt --ulimit cpu=5 catalyst ./cp.sh cpp 
 
 
 # --------------------------------
 # c++
 
-# docker run --rm -v $(pwd)/cpp-engine/app/main.cpp:/usr/src/app/cpp-engine/app/main.cpp --ulimit cpu=5 full1 ./cp.sh cpp 
+# docker run --rm -v $(pwd)/cpp-engine/app/main.cpp:/usr/src/app/cpp-engine/app/main.cpp --memory=256m --ulimit cpu=5 catalyst ./cp.sh cpp 
 
-# docker run --rm -v $(pwd)/cpp-engine/app/main.cpp:/usr/src/app/cpp-engine/app/main.cpp -v $(pwd)/cpp-engine/app/input.txt:/usr/src/app/cpp-engine/app/input.txt --ulimit cpu=5 full1 ./cp.sh cpp 
+# docker run --rm -v $(pwd)/cpp-engine/app/main.cpp:/usr/src/app/cpp-engine/app/main.cpp -v $(pwd)/cpp-engine/app/input.txt:/usr/src/app/cpp-engine/app/input.txt --memory=256m --ulimit cpu=5  catalyst ./cp.sh cpp 
 
+# docker run --rm -v D:\junk\code-exec-engine\cpp-engine\app\main.cpp:/usr/src/app/cpp-engine/app/main.cpp  -v D:\junk\code-exec-engine\cpp-engine\app\input.txt:/usr/src/app/cpp-engine/app/input.txt
+#         --memory=100m --ulimit cpu=5 catalyst ./cp.sh cpp
 # --------------------------------
 
 # js
 
-# docker run --rm -v $(pwd)/js-engine/app/main.js:/usr/src/app/js-engine/app/main.js --ulimit cpu=5 full ./j.sh inputtrue
+# docker run --rm -v $(pwd)/js-engine/app/index.js:/usr/src/app/js-engine/app/index.js --memory=256m --ulimit cpu=1  catalyst ./j.sh 
 
-# docker run --rm -v $(pwd)/js-engine/app/index.js:/usr/src/app/js-engine/app/index.js  -v $(pwd)/js-engine/app/input.txt:/usr/src/app/js-engine/app/input.txt  --ulimit cpu=5 full1 ./j.sh inputtrue
+# docker run --rm -v $(pwd)/js-engine/app/index.js:/usr/src/app/js-engine/app/index.js  -v $(pwd)/js-engine/app/input.txt:/usr/src/app/js-engine/app/input.txt  --memory=256m --ulimit cpu=1  catalyst ./j.sh inputtrue
 
 # --------------------------------
 
 # java
-# docker run --rm -v $(pwd)/java-engine/app/Main.java:/usr/src/app/java-engine/app/Main.java --ulimit cpu=5 full1 ./jv.sh
+# docker run --rm -v $(pwd)/java-engine/app/Main.java:/usr/src/app/java-engine/app/Main.java --memory=256m --ulimit cpu=5  catalyst ./jv.sh
 
 
-# docker run --rm -v $(pwd)/java-engine/app/Main.java:/usr/src/app/java-engine/app/Main.java  -v $(pwd)/java-engine/app/input.txt:/usr/src/app/java-engine/app/input.txt    --ulimit cpu=5 full1 ./jv.sh inputtrue
+# docker run --rm -v $(pwd)/java-engine/app/Main.java:/usr/src/app/java-engine/app/Main.java  -v $(pwd)/java-engine/app/input.txt:/usr/src/app/java-engine/app/input.txt    --memory=256m --ulimit cpu=5  catalyst ./jv.sh inputtrue
 
 # --------------------------------
 # python
 
-# docker run --rm -v $(pwd)/python-engine/app/main.py:/usr/src/app/python-engine/app/main.py --ulimit cpu=5 full1 ./py.sh 
+# docker run --rm -v $(pwd)/python-engine/app/main.py:/usr/src/app/python-engine/app/main.py --memory=256m --ulimit cpu=5  catalyst ./py.sh 
 
-# docker run --rm -v $(pwd)/python-engine/app/main.py:/usr/src/app/python-engine/app/main.py -v $(pwd)/python-engine/app/input.txt:/usr/src/app/python-engine/app/input.txt  --ulimit cpu=5 full1 ./py.sh inputtrue
+# docker run --rm -v $(pwd)/python-engine/app/main.py:/usr/src/app/python-engine/app/main.py -v $(pwd)/python-engine/app/input.txt:/usr/src/app/python-engine/app/input.txt --memory=256m --ulimit cpu=5 catalyst ./py.sh inputtrue
 
 # -------------------------------------
 

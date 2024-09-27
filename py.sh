@@ -23,6 +23,6 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Display successful execution message and output
-echo "Program output:"
+
+
 cat output.txt
