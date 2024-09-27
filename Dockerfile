@@ -24,6 +24,7 @@ COPY ./js-engine /usr/src/app/js-engine
 RUN chmod +x /usr/src/app/*.sh
 
 COPY ./server/package.json ./server/package.json
+COPY ./server/index.js ./server/index.js
 COPY ./server/package-lock.json ./server/package-lock.json
 RUN cd server && npm install
 
