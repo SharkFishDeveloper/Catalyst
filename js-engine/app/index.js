@@ -1,1 +1,1 @@
-//default
+console.log("hello")
