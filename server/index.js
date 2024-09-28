@@ -29,13 +29,14 @@ app.use('/submit-code', limiter);
 app.post("/submit-code",async(req,res)=>{
 
     const {code,language,stdin} = req.body;
+    const lowerCaseLanguage = language.toLowerCase();
     let shellextension = "";
     let engine = "";
     let fileExtension = "";
     let stdinBool = stdin ? true : false;
   
 
-    switch (language.toLowerCase()){
+    switch (lowerCaseLanguage){
         case "cpp":
         shellextension = "cpp.sh cpp"
         engine = `cpp-engine`
@@ -67,7 +68,7 @@ app.post("/submit-code",async(req,res)=>{
         break;
     }
     
-    let codeFile = language.toLowerCase() ==="java" ? `Main.${fileExtension}` : language === "js"?`index.${fileExtension}`:`main.${fileExtension}`;
+    let codeFile = lowerCaseLanguage ==="java" ? `Main.${fileExtension}` : lowerCaseLanguage === "js"?`index.${fileExtension}`:`main.${fileExtension}`;
 
     const __dirname = process.cwd();
     const filePath = path.resolve(__dirname, `../${engine}/app/${codeFile}`);
@@ -91,10 +92,10 @@ app.post("/submit-code",async(req,res)=>{
             const executionTime = endTime - startTime; 
             if (error) {
               console.error(`Error: ${error}`);
-              return res.json({stdout:"",executionTime,stderr:stdout,language})
+              return res.json({stdout:"",executionTime,stderr:stdout,language:lowerCaseLanguage})
             }
             console.log(`Output: ${stdout}`);
-            return res.json({stdout,executionTime,stderr,language})
+            return res.json({stdout,executionTime,stderr,language:lowerCaseLanguage})
         });
 })
 

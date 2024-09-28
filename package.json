@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prod": "docker pull shahzcanvas/catalyst && docker tag shahzcanvas/catalyst catalyst &&  cd server && node ./index.js"
+    "install-image": "docker pull shahzcanvas/catalyst && docker tag shahzcanvas/catalyst catalyst",
+    "catalyst": "cd server &&  node ./index.js",
+    "production": "npm run install-image && npm run catalyst"
   },
   "keywords": [],
   "author": "",
