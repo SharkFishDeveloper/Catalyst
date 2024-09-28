@@ -29,7 +29,7 @@ To use **Catalyst**, follow these steps:
 
 ### ⚙️ Configuration
 
-There is only one main configurational file in `./server/index.js`. You can easily configure either the Docker image or the Catalyst engine within this file.
+You can easily configure the ```Dockerfile```, ```./server/index.js```, or the specific ```language's shell script``` according to your needs.
 
 ### 🛠️ Rate Limiting
 
