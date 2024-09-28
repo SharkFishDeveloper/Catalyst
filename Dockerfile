@@ -11,10 +11,11 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean
 
 
-COPY ./py.sh ./py.sh
-COPY ./cp.sh ./cp.sh
-COPY ./j.sh ./j.sh
-COPY ./jv.sh ./jv.sh
+COPY ./python.sh ./python.sh
+COPY ./cpp.sh ./cpp.sh
+COPY ./js.sh ./js.sh
+COPY ./java.sh ./java.sh
+COPY ./hello.sh ./hello.sh
 
 COPY ./cpp-engine /usr/src/app/cpp-engine
 COPY ./java-engine /usr/src/app/java-engine

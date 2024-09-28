@@ -1,1 +1,1 @@
-# default
+print(100)

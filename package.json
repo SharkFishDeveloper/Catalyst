@@ -1,0 +1,12 @@
+{
+  "name": "code-exec-engine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prod": "docker pull shahzcanvas/catalyst && docker tag shahzcanvas/catalyst catalyst &&  cd server && node ./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

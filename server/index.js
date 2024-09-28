@@ -37,31 +37,31 @@ app.post("/submit-code",async(req,res)=>{
 
     switch (language.toLowerCase()){
         case "cpp":
-        shellextension = "cp.sh cpp"
+        shellextension = "cpp.sh cpp"
         engine = `cpp-engine`
         fileExtension = "cpp"
         break;
 
         case "c":
-        shellextension = "cp.sh c"
+        shellextension = "cpp.sh c"
         engine = `cpp-engine`
         fileExtension = "c"
         break;
 
         case "python":
-        shellextension = stdinBool ?  "py.sh inputtrue" : "py.sh"
+        shellextension = stdinBool ?  "python.sh inputtrue" : "python.sh"
         engine = `python-engine`
         fileExtension = "py"
         break;
 
         case "java":
-        shellextension =stdinBool ? "jv.sh inputtrue" : "jv.sh"
+        shellextension =stdinBool ? "java.sh inputtrue" : "java.sh"
         engine = `java-engine`
         fileExtension = "java"
         break;
 
         case "js":
-        shellextension = stdinBool ? "j.sh inputtrue" : "j.sh"
+        shellextension = stdinBool ? "js.sh inputtrue" : "js.sh"
         engine = `js-engine`
         fileExtension = "js"
         break;
@@ -70,33 +70,23 @@ app.post("/submit-code",async(req,res)=>{
     let codeFile = language.toLowerCase() ==="java" ? `Main.${fileExtension}` : language === "js"?`index.${fileExtension}`:`main.${fileExtension}`;
 
     const __dirname = process.cwd();
-    const filePath = path.resolve(__dirname, `./${engine}/app/${codeFile}`);
-    console.log("FILEPATH-<>",filePath)
+    const filePath = path.resolve(__dirname, `../${engine}/app/${codeFile}`);
 
-    try {
-        fs.writeFileSync(filePath,code);
-        console.log("CODE CONTENT->",fs.readFileSync(filePath,"utf-8"))
-    } catch (error) {
-        console.log("ERROR WRITING FILE ->",filePath,error)
-    }
+    fs.writeFileSync(filePath,code);
     
     let command = `docker run --rm -v ${filePath}:/usr/src/app/${engine}/app/${codeFile} `;
 
     if (stdinBool) {
-        const inputfilePath = path.resolve(__dirname, `./${engine}/app/input.txt`);
-        command += ` -v ${inputfilePath}:/usr/src/app/${engine}/app/input.txt --memory=100m --ulimit cpu=5 catalyst ./${shellextension}`;
-        console.log("INPUT FILE->",path.resolve(__dirname,`../${engine}/app/input.txt`,stdin));
-        //path.resolve(__dirname,`../${engine}/app/input.txt`,stdin)
-        fs.writeFileSync(inputfilePath,stdin);
+        const inputfilePath = path.resolve(__dirname, `../${engine}/app/input.txt`);
+        command += ` -v ${inputfilePath}:/usr/src/app/${engine}/app/input.txt --memory=100m --ulimit cpu=5  catalyst ./${shellextension}`;
+        fs.writeFileSync(`../${engine}/app/input.txt`,stdin);
     }
-    //  --ulimit cpu=5 catalyst ./${shellextension}
-    //./js-engine/app/index.js
     else if(stdinBool!==""){
-        command += `  --ulimit cpu=5 catalyst ./${shellextension}`;
+        command += ` --ulimit cpu=5  catalyst ./${shellextension}`;
     }
-    console.log("DOCKER COMMAND",command)
+
         const startTime = Date.now();
-        await exec(command, (error, stdout, stderr) => {
+        exec(command, (error, stdout, stderr) => {
             const endTime = Date.now(); // Record end time
             const executionTime = endTime - startTime; 
             if (error) {
@@ -109,13 +99,12 @@ app.post("/submit-code",async(req,res)=>{
 })
 
 app.get("/languages",async(req,res)=>{
-    res.json({languages:"By defualt 5 languages run : C\n,C++\n,Java\n,Python\n,Javascript"})
+    res.send({languages:"By defualt 5 languages run : C\n,C++\n,Java\n,Python\n,Javascript"})
 })
 
 app.get("/",async(req,res)=>{
-    res.send({message:"Running Catalyst code engine created by S.F.D"})
+    res.send({message:"You are using catalyst code engine created by S.F.D"})
 })
-
 
 
 //* Change port if you want !!
