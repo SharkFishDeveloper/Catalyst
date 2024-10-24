@@ -8,7 +8,7 @@
     "catalyst": "cd server && npm i && node ./index.js",
     "start": "cd server && npx pm2 start ./index.js && npx pm2 logs",
     "production": "npm run install-image && npm run start",
-    "stop":"cd server && npx pm2 stop 0"
+    "stop":"cd server && npx pm2 delete all"
   },
   "keywords": [],
   "author": "",
