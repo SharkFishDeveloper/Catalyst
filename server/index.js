@@ -29,13 +29,21 @@ app.use('/submit-code', limiter);
 app.post("/submit-code",async(req,res)=>{
 
     const {code,language,stdin} = req.body;
-    const lowerCaseLanguage = language.toLowerCase();
+    
+    let lowerCaseLanguage = language.toLowerCase();
     let shellextension = "";
     let engine = "";
     let fileExtension = "";
     let stdinBool = stdin ? true : false;
   
 
+    if (lowerCaseLanguage === 'c++') {
+        lowerCaseLanguage = 'cpp';
+    }
+    else  if (lowerCaseLanguage === 'javascript') {
+        lowerCaseLanguage = 'js';
+    }
+    console.log(lowerCaseLanguage)
     switch (lowerCaseLanguage){
         case "cpp":
         shellextension = "cpp.sh cpp"

@@ -6,9 +6,14 @@
   "scripts": {
     "install-image": "docker pull shahzcanvas/catalyst && docker tag shahzcanvas/catalyst catalyst",
     "catalyst": "cd server && npm i && node ./index.js",
-    "production": "npm run install-image && npm run catalyst"
+    "start": "cd server && npx pm2 start ./index.js && npx pm2 logs",
+    "production": "npm run install-image && npm run catalyst",
+    "stop":"cd server && npx pm2 stop 0"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "pm2": "^5.4.2"
+  }
 }
