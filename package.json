@@ -6,7 +6,7 @@
   "scripts": {
     "install-image": "docker pull shahzcanvas/catalyst && docker tag shahzcanvas/catalyst catalyst",
     "catalyst": "cd server && npm i && node ./index.js",
-    "start": "cd server && npx pm2 start ./index.js && npx pm2 logs",
+    "start": "cd server && npx pm2 start ./index.js",
     "production": "npm run install-image && npm run start",
     "stop":"cd server && npx pm2 delete all"
   },
